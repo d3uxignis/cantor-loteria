@@ -88,8 +88,8 @@ const elementosInterfaz = {
 
 // Rutas de archivos de imágenes
 const RUTA_IMAGENES_CARTAS = `${rutaBase}/cartas/`;
-const IMAGEN_BIENVENIDA = `${rutaBase}/cartas/0.PNG`;
-const IMAGEN_FINAL = `${rutaBase}/cartas/0.PNG`;
+const IMAGEN_BIENVENIDA = `${rutaBase}/cartas/instrucciones.PNG`;
+const IMAGEN_FINAL = `${rutaBase}/cartas/fin.PNG`;
 
 // Inicialización de la aplicación
 document.addEventListener('DOMContentLoaded', inicializarAplicacion);

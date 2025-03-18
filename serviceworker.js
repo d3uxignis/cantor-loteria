@@ -8,7 +8,8 @@ const urlsToCache = [
   './styles.css',
   './script.js',
   './manifest.json',
-  './cartas/0.PNG'
+  './cartas/instrucciones.PNG',
+  './cartas/fin.PNG'
 ];
 
 // Añadir todas las cartas a la caché
