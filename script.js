@@ -198,26 +198,6 @@ function manejarErrorCargaImagen() {
     };
 }
 
-// Agregar botón flotante de reinicio para dispositivos móviles
-function agregarBotonReinicio() {
-    const botonReinicio = document.createElement('button');
-    botonReinicio.textContent = 'Reiniciar';
-    botonReinicio.classList.add('boton-reinicio');
-    botonReinicio.style.position = 'fixed';
-    botonReinicio.style.bottom = '20px';
-    botonReinicio.style.right = '20px';
-    botonReinicio.style.zIndex = '1000';
-    botonReinicio.style.padding = '10px 15px';
-    botonReinicio.style.backgroundColor = '#dc3545';
-    botonReinicio.style.color = 'white';
-    botonReinicio.style.border = 'none';
-    botonReinicio.style.borderRadius = '5px';
-    botonReinicio.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
-    
-    botonReinicio.addEventListener('click', reiniciarJuego);
-    document.body.appendChild(botonReinicio);
-}
-
 // Inicializar el sintetizador de voz
 function configurarSintetizadorVoz() {
     // Comprobar si el navegador soporta síntesis de voz
