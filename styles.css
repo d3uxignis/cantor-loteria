@@ -1,7 +1,6 @@
 /**
  * Lotería Mexicana - Estilos Optimizados
  * Versión adaptada para accesibilidad visual mejorada
- * Distribución: 80% carta principal, 20% historial
  */
 
 /* Reset y estilos base */
@@ -11,15 +10,23 @@
     box-sizing: border-box;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    touch-action: manipulation;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    overscroll-behavior: none;
 }
 
 /* Contenedor principal */
@@ -59,6 +66,7 @@ body {
     height: 100%;
     overflow-x: auto;
     scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
 }
 
 .cartas-historial {
@@ -76,11 +84,16 @@ body {
     padding: 5px;
 }
 
+/* Ocultar barras de desplazamiento */
+::-webkit-scrollbar {
+    display: none;
+}
+
 @media (orientation: landscape) {
     .aplicacion {
         flex-direction: row;
     }
-    
+
     .visor-carta {
         width: 80%;
         height: 100%;
@@ -92,25 +105,33 @@ body {
         transition: opacity 0.3s ease;
         opacity: 0;
     }
-    
+
     .historial {
         width: 20%;
         height: 100%;
     }
-    
+
     .contenedor-historial {
         overflow-y: auto;
         overflow-x: hidden;
     }
-    
+
     .cartas-historial {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .carta-historial {
         width: 20vh;
         height: auto;
         padding: 5px;
+    }
+}
+
+/* Para iOS */
+@supports (-webkit-touch-callout: none) {
+    /* Asegura que la aplicación ocupe toda la pantalla en iOS */
+    body {
+        height: -webkit-fill-available;
     }
 }

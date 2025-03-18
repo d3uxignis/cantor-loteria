@@ -439,3 +439,45 @@ if (window.matchMedia('(display-mode: standalone)').matches ||
     window.navigator.standalone === true) {
     console.log('La aplicación se está ejecutando como PWA instalada');
 }
+
+// Función para solicitar pantalla completa
+function solicitarPantallaCompleta() {
+    // Verificar si está disponible la API de pantalla completa
+    const elem = document.documentElement;
+
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+    }
+}
+
+// Solicitar pantalla completa al hacer clic en cualquier parte de la pantalla
+document.addEventListener('click', function () {
+    // Solo solicitar pantalla completa si no estamos en modo PWA instalada
+    // ya que en ese caso, el manifest.json con display:fullscreen debería funcionar
+    if (!window.matchMedia('(display-mode: standalone)').matches &&
+        !window.navigator.standalone) {
+        solicitarPantallaCompleta();
+    }
+}, { once: true }); // once:true para que solo se ejecute una vez
+
+// También intenta solicitar pantalla completa al cargar la página en dispositivos móviles
+document.addEventListener('DOMContentLoaded', function () {
+    // Detección de dispositivo móvil
+    const esMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (esMobile) {
+        // En dispositivos móviles, intentar pantalla completa tras un breve retraso
+        setTimeout(solicitarPantallaCompleta, 1000);
+    }
+});
+
+// Intentar entrar en pantalla completa cuando se instala la PWA
+window.addEventListener('appinstalled', () => {
+    setTimeout(solicitarPantallaCompleta, 500);
+});
