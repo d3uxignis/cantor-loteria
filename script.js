@@ -10,60 +10,60 @@ const rutaBase = esGitHubPages ? `/${nombreRepositorio}` : '';
 
 // Datos de las cartas de la lotería con sus nombres
 const CARTAS_LOTERIA = [
-    { id: 1, nombre: "El gallo" },
-    { id: 2, nombre: "El diablito" },
-    { id: 3, nombre: "La dama" },
-    { id: 4, nombre: "El catrín" },
-    { id: 5, nombre: "El paraguas" },
-    { id: 6, nombre: "La sirena" },
-    { id: 7, nombre: "La escalera" },
-    { id: 8, nombre: "La botella" },
-    { id: 9, nombre: "El barril" },
-    { id: 10, nombre: "El árbol" },
-    { id: 11, nombre: "El melón" },
-    { id: 12, nombre: "El valiente" },
-    { id: 13, nombre: "El gorrito" },
-    { id: 14, nombre: "La muerte" },
-    { id: 15, nombre: "La pera" },
-    { id: 16, nombre: "La bandera" },
-    { id: 17, nombre: "El bandolón" },
-    { id: 18, nombre: "El violoncello" },
-    { id: 19, nombre: "La garza" },
-    { id: 20, nombre: "El pájaro" },
-    { id: 21, nombre: "La mano" },
-    { id: 22, nombre: "La bota" },
-    { id: 23, nombre: "La luna" },
-    { id: 24, nombre: "El cotorro" },
-    { id: 25, nombre: "El borracho" },
-    { id: 26, nombre: "El negrito" },
-    { id: 27, nombre: "El corazón" },
-    { id: 28, nombre: "La sandía" },
-    { id: 29, nombre: "El tambor" },
-    { id: 30, nombre: "El camarón" },
-    { id: 31, nombre: "Las jaras" },
-    { id: 32, nombre: "El músico" },
-    { id: 33, nombre: "La araña" },
-    { id: 34, nombre: "El soldado" },
-    { id: 35, nombre: "La estrella" },
-    { id: 36, nombre: "El cazo" },
-    { id: 37, nombre: "El mundo" },
-    { id: 38, nombre: "El apache" },
-    { id: 39, nombre: "El nopal" },
-    { id: 40, nombre: "El alacrán" },
-    { id: 41, nombre: "La rosa" },
-    { id: 42, nombre: "La calavera" },
-    { id: 43, nombre: "La campana" },
-    { id: 44, nombre: "El cantarito" },
-    { id: 45, nombre: "El venado" },
-    { id: 46, nombre: "El sol" },
-    { id: 47, nombre: "La corona" },
-    { id: 48, nombre: "La chalupa" },
-    { id: 49, nombre: "El pino" },
-    { id: 50, nombre: "El pescado" },
-    { id: 51, nombre: "La palma" },
-    { id: 52, nombre: "La maceta" },
-    { id: 53, nombre: "El arpa" },
-    { id: 54, nombre: "La rana" }
+    { id: 1, nombre: "El gallo", frase: "Canta al amanecer", complemento: "aunque nadie lo quiera ver" },
+    { id: 2, nombre: "El diablito", frase: "Hace travesuras", complemento: "y ríe con locuras" },
+    { id: 3, nombre: "La dama", frase: "Elegante y bonita", complemento: "baila hasta quedar cansadita" },
+    { id: 4, nombre: "El catrín", frase: "Vestido con estilo", complemento: "pero nunca trae ni un filo" },
+    { id: 5, nombre: "El paraguas", frase: "Te protege de la lluvia", complemento: "menos cuando se te olvida" },
+    { id: 6, nombre: "La sirena", frase: "Vive en el mar y canta", complemento: "y al marinero encanta" },
+    { id: 7, nombre: "La escalera", frase: "Para subir muy alto", complemento: "sin miedo a dar un salto" },
+    { id: 8, nombre: "La botella", frase: "Guarda líquidos sabrosos", complemento: "para amigos cariñosos" },
+    { id: 9, nombre: "El barril", frase: "Grande y lleno de algo rico", complemento: "pero cuidado, no abuses, chico" },
+    { id: 10, nombre: "El árbol", frase: "Tiene hojas y da sombra", complemento: "y si trepas, no te caigas en broma" },
+    { id: 11, nombre: "El melón", frase: "Fruta redonda y dulce", complemento: "pa' que tu panza se impulse" },
+    { id: 12, nombre: "El valiente", frase: "No le teme a nada", complemento: "ni al picante de la tostada" },
+    { id: 13, nombre: "El gorrito", frase: "Se usa en la cabeza", complemento: "te tapa hasta la pereza" },
+    { id: 14, nombre: "La muerte", frase: "Tiene huesos y no camina", complemento: "pero baila en la cantina" },
+    { id: 15, nombre: "La pera", frase: "Fruta verde con forma rara", complemento: "más sabrosa si está cara" },
+    { id: 16, nombre: "La bandera", frase: "Tres colores muy queridos", complemento: "que nos tienen muy unidos" },
+    { id: 17, nombre: "El bandolón", frase: "Instrumento para serenata", complemento: "que al amor retrata" },
+    { id: 18, nombre: "El violoncello", frase: "Grande y musical", complemento: "y muy especial" },
+    { id: 19, nombre: "La garza", frase: "Ave alta y delgada", complemento: "camina muy parada" },
+    { id: 20, nombre: "El pájaro", frase: "Pequeño y canta bonito", complemento: "alegrando con su grito" },
+    { id: 21, nombre: "La mano", frase: "Tiene cinco dedos", complemento: "y aplaude sin tener miedos" },
+    { id: 22, nombre: "La bota", frase: "Zapato alto y fuerte", complemento: "que pisando tiene suerte" },
+    { id: 23, nombre: "La luna", frase: "Sale en la noche", complemento: "mientras el sol se va en coche" },
+    { id: 24, nombre: "El cotorro", frase: "Habla y es verde", complemento: "chismea aunque no se acuerde" },
+    { id: 25, nombre: "El borracho", frase: "Camina de lado", complemento: "porque anda bien mareado" },
+    { id: 26, nombre: "El negrito", frase: "Baila con ritmo", complemento: "y lo hace con optimismo" },
+    { id: 27, nombre: "El corazón", frase: "Late y siente amor", complemento: "y llora con dolor" },
+    { id: 28, nombre: "La sandía", frase: "Fruta grande y jugosa", complemento: "refrescante y deliciosa" },
+    { id: 29, nombre: "El tambor", frase: "Hace ruido al tocarlo", complemento: "y nadie puede callarlo" },
+    { id: 30, nombre: "El camarón", frase: "Nada hacia atrás", complemento: "cuando escapa del disfraz" },
+    { id: 31, nombre: "Las jaras", frase: "Flechas que apuntan lejos", complemento: "donde viven los conejos" },
+    { id: 32, nombre: "El músico", frase: "Toca instrumentos bonitos", complemento: "alegrando a los amiguitos" },
+    { id: 33, nombre: "La araña", frase: "Teje su telaraña", complemento: "para atrapar la mañana" },
+    { id: 34, nombre: "El soldado", frase: "Valiente con uniforme", complemento: "en postura firme y enorme" },
+    { id: 35, nombre: "La estrella", frase: "Brilla en el cielo", complemento: "y la vemos desde el suelo" },
+    { id: 36, nombre: "El cazo", frase: "Para cocinar rico", complemento: "y llenar bien el hocico" },
+    { id: 37, nombre: "El mundo", frase: "Planeta donde vivimos", complemento: "que cuidamos y queremos" },
+    { id: 38, nombre: "El apache", frase: "Baila con plumas", complemento: "saltando hasta las alturas" },
+    { id: 39, nombre: "El nopal", frase: "Planta con espinas", complemento: "pero rica en vitaminas" },
+    { id: 40, nombre: "El alacrán", frase: "Pica con la cola", complemento: "y no juega ni a la rola" },
+    { id: 41, nombre: "La rosa", frase: "Flor bonita y con espinas", complemento: "te pincha si la arruinas" },
+    { id: 42, nombre: "La calavera", frase: "Cara sin piel", complemento: "siempre riendo fiel" },
+    { id: 43, nombre: "La campana", frase: "Suena fuerte y claro", complemento: "te despierta sin reparo" },
+    { id: 44, nombre: "El cantarito", frase: "Recipiente de barro", complemento: "agua fresca sin catarro" },
+    { id: 45, nombre: "El venado", frase: "Animal con cuernos", complemento: "que corre hasta en los inviernos" },
+    { id: 46, nombre: "El sol", frase: "Calienta durante el día", complemento: "hasta freírte la alegría" },
+    { id: 47, nombre: "La corona", frase: "Usada por reyes y reinas", complemento: "brilla más que las estrellas" },
+    { id: 48, nombre: "La chalupa", frase: "Pequeña barca en el agua", complemento: "que navega sin paraguas" },
+    { id: 49, nombre: "El pino", frase: "Árbol verde todo el año", complemento: "perfecto sin hacer daño" },
+    { id: 50, nombre: "El pescado", frase: "Nada en el agua", complemento: "pero escapa sin paraguas" },
+    { id: 51, nombre: "La palma", frase: "Árbol alto cerca del mar", complemento: "donde hamacas vas a colgar" },
+    { id: 52, nombre: "La maceta", frase: "Recipiente para plantas", complemento: "que adornan hasta gargantas" },
+    { id: 53, nombre: "El arpa", frase: "Instrumento grande con cuerdas", complemento: "que te calma si te acuerdas" },
+    { id: 54, nombre: "La rana", frase: "Salta y croa", complemento: "más que un niño que se asoma" }
 ];
 
 // Estado del juego
@@ -327,32 +327,32 @@ function reiniciarJuego() {
 function elegirYMostrarCartaAleatoria() {
     // Si el juego está pausado, no continuar
     if (estadoJuego.juegoPausado) return;
-    
+
     // Verificar si quedan cartas disponibles
     if (estadoJuego.cartasDisponibles.length === 0) {
         terminarJuego();
         return;
     }
-    
+
     // Seleccionar una carta al azar del mazo disponible
     const indiceAleatorio = Math.floor(Math.random() * estadoJuego.cartasDisponibles.length);
     const cartaSeleccionada = estadoJuego.cartasDisponibles.splice(indiceAleatorio, 1)[0];
-    
+
     // Registrar en el historial de cartas mostradas
     estadoJuego.cartasMostradas.push(cartaSeleccionada);
-    
+
     // Mostrar la carta con efecto de desvanecimiento
     ocultarCartaConEfecto(() => {
         const rutaCarta = `${RUTA_IMAGENES_CARTAS}${cartaSeleccionada.id}.jpg`;
         elementosInterfaz.imagenCartaActual.src = rutaCarta;
         mostrarCartaConEfecto();
-        
+
         // Añadir al historial visual
         agregarCartaAlHistorial(cartaSeleccionada.id, rutaCarta);
-        
-        // Pronunciar el nombre de la carta
-        cantarNombreCarta(cartaSeleccionada.nombre);
-        
+
+        // Pronunciar la carta con frases según el tiempo de cambio
+        cantarNombreCarta(cartaSeleccionada);
+
         // Programar la siguiente carta (guardando referencia para poder cancelar)
         estadoJuego.timeoutSiguienteCarta = setTimeout(() => {
             elegirYMostrarCartaAleatoria();
@@ -393,27 +393,49 @@ function agregarCartaAlHistorial(idCarta, rutaCarta) {
 }
 
 // Pronunciar el nombre de la carta con síntesis de voz
-function cantarNombreCarta(nombreCarta) {
+function cantarNombreCarta(carta) {
     // Si la síntesis de voz no está disponible, terminar sin error
     if (!window.speechSynthesis) return;
-    
+
     // Cancelar cualquier pronunciación en curso
     window.speechSynthesis.cancel();
-    
+
+    // Determinar qué pronunciar según el tiempo entre cambios
+    let textoPronunciar = '';
+
+    if (estadoJuego.tiempoEntreCambios >= 5000) {
+        // Dice frase, complemento y nombre
+        textoPronunciar = `${carta.frase}. ${carta.complemento}. ${carta.nombre}`;
+    } else if (estadoJuego.tiempoEntreCambios >= 3000) {
+        // Solo dice frase y nombre
+        textoPronunciar = `${carta.frase}. ${carta.nombre}`;
+    } else {
+        // Solo dice el nombre
+        textoPronunciar = carta.nombre;
+    }
+
     // Crear mensaje para pronunciar y configurarlo
-    const mensajeVoz = new SpeechSynthesisUtterance(nombreCarta);
-    
+    const mensajeVoz = new SpeechSynthesisUtterance(textoPronunciar);
+
     // Intentar encontrar una voz en español mexicano
     const voces = window.speechSynthesis.getVoices();
-    const vozEspanolMexicano = voces.find(voz => voz.lang === 'es-MX') || 
-                            voces.find(voz => voz.lang.includes('es')) || 
-                            voces[0];
-    
+    const vozEspanolMexicano = voces.find(voz => voz.lang === 'es-MX') ||
+        voces.find(voz => voz.lang.includes('es')) ||
+        voces[0];
+
     if (vozEspanolMexicano) {
         mensajeVoz.voice = vozEspanolMexicano;
         mensajeVoz.lang = 'es-MX';
     }
-    
+
+    // Ajustar la velocidad para las frases y complementos (más rápido)
+    // y normal o más lento para el nombre
+    if (estadoJuego.tiempoEntreCambios >= 3000) {
+        mensajeVoz.rate = 1.2; // Un poco más rápido para frases y complementos
+    } else {
+        mensajeVoz.rate = 1.0; // Normal para solo el nombre
+    }
+
     // Reproducir la pronunciación
     window.speechSynthesis.speak(mensajeVoz);
 }
