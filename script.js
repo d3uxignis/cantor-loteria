@@ -77,7 +77,8 @@ let estadoJuego = {
     tiempoEntreClicks: 500,      // Tiempo máximo entre clics para considerarse múltiples (en ms)
     timeoutSiguienteCarta: null, // Referencia al timeout para la siguiente carta
     imagenesCargadas: false,     // Indicador de que las imágenes han sido precargadas
-    imagenesPrecargadas: {}      // Caché de imágenes precargadas
+    imagenesPrecargadas: {},     // Caché de imágenes precargadas
+    tiempoEntreCambios: 5000     // Tiempo entre cambios de carta en milisegundos
 };
 
 // Elementos de la interfaz
@@ -114,6 +115,9 @@ function inicializarAplicacion() {
     
     // Configurar escuchador de eventos para la imagen principal
     elementosInterfaz.imagenCartaActual.addEventListener('click', manejarClickCarta);
+
+    // Configurar escuchadores para deslizamientos
+    configurarDetectorDeslizamiento();
     
     // Hacer que la imagen sea interactiva visualmente
     elementosInterfaz.imagenCartaActual.style.cursor = 'pointer';
@@ -338,7 +342,7 @@ function elegirYMostrarCartaAleatoria() {
         // Programar la siguiente carta (guardando referencia para poder cancelar)
         estadoJuego.timeoutSiguienteCarta = setTimeout(() => {
             elegirYMostrarCartaAleatoria();
-        }, 5000);
+        }, estadoJuego.tiempoEntreCambios);
     });
 }
 
@@ -461,3 +465,95 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('appinstalled', () => {
     setTimeout(solicitarPantallaCompleta, 500);
 });
+
+// Detector de deslizamiento para cambiar el tiempo
+function configurarDetectorDeslizamiento() {
+    let touchStartY = 0;
+    let lastY = 0;
+    let isSliding = false;
+    let acumuladorTiempo = 0;
+    let timerID = null;
+
+    // Inicio del toque
+    document.addEventListener('touchstart', (e) => {
+        touchStartY = e.changedTouches[0].screenY;
+        lastY = touchStartY;
+        isSliding = true;
+        acumuladorTiempo = 0;
+
+        // Inicia el monitoreo continuo si se mantiene el deslizamiento
+        timerID = setInterval(() => {
+            if (acumuladorTiempo !== 0) {
+                // Ajusta el tiempo basado en la acumulación de deslizamiento
+                const cambioSegundos = Math.floor(acumuladorTiempo / 50);
+                if (cambioSegundos !== 0) {
+                    estadoJuego.tiempoEntreCambios += cambioSegundos * 1000;
+                    // Limitar tiempo mínimo a 1 segundo
+                    estadoJuego.tiempoEntreCambios = Math.max(1000, estadoJuego.tiempoEntreCambios);
+                    // Mostrar el nuevo tiempo
+                    mostrarIndicadorTiempo(estadoJuego.tiempoEntreCambios / 1000);
+                    acumuladorTiempo = 0;
+                }
+            }
+        }, 200); // Actualizar cada 200ms para una respuesta fluida
+    }, false);
+
+    // Durante el deslizamiento
+    document.addEventListener('touchmove', (e) => {
+        if (!isSliding) return;
+
+        const currentY = e.changedTouches[0].screenY;
+        const delta = lastY - currentY;
+        acumuladorTiempo += delta;
+        lastY = currentY;
+
+        // Prevenir desplazamiento de la página si estamos ajustando el tiempo
+        if (Math.abs(acumuladorTiempo) > 30) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Fin del toque
+    document.addEventListener('touchend', () => {
+        isSliding = false;
+        if (timerID) {
+            clearInterval(timerID);
+            timerID = null;
+        }
+    }, false);
+
+    // Cancelación del toque
+    document.addEventListener('touchcancel', () => {
+        isSliding = false;
+        if (timerID) {
+            clearInterval(timerID);
+            timerID = null;
+        }
+    }, false);
+}
+
+// Mostrar indicador visual del nuevo tiempo
+function mostrarIndicadorTiempo(segundos) {
+    // Crear o reutilizar el indicador
+    let indicador = document.getElementById('indicador-tiempo');
+
+    if (!indicador) {
+        indicador = document.createElement('div');
+        indicador.id = 'indicador-tiempo';
+        document.body.appendChild(indicador);
+    }
+
+    // Solo actualizar el contenido y la visibilidad
+    indicador.textContent = segundos;
+    indicador.style.opacity = '1';
+
+    // Limpiar cualquier temporizador anterior
+    if (indicador.hideTimer) {
+        clearTimeout(indicador.hideTimer);
+    }
+
+    // Configurar un nuevo temporizador para ocultar
+    indicador.hideTimer = setTimeout(() => {
+        indicador.style.opacity = '0';
+    }, 2000);
+}
