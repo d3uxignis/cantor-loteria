@@ -78,7 +78,8 @@ let estadoJuego = {
     timeoutSiguienteCarta: null, // Referencia al timeout para la siguiente carta
     imagenesCargadas: false,     // Indicador de que las imágenes han sido precargadas
     imagenesPrecargadas: {},     // Caché de imágenes precargadas
-    tiempoEntreCambios: 5000     // Tiempo entre cambios de carta en milisegundos
+    tiempoEntreCambios: 5000,    // Tiempo entre cambios de carta en milisegundos
+    wakeLock: null               // Para guardar la referencia al wake lock
 };
 
 // Elementos de la interfaz
@@ -127,6 +128,13 @@ function inicializarAplicacion() {
     
     // Agregar Service Worker para PWA
     registrarServiceWorker();
+
+    // Manejar eventos de visibilidad del documento
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && estadoJuego.juegoActivo && !estadoJuego.juegoPausado) {
+            solicitarWakeLock();
+        }
+    });
 }
 
 // Registrar Service Worker para funcionamiento offline
@@ -254,6 +262,9 @@ function manejarClickCarta() {
 function comenzarJuego() {
     estadoJuego.juegoActivo = true;
     estadoJuego.juegoPausado = false;
+
+    // Solicitar que la pantalla no se apague
+    solicitarWakeLock();
     
     // Reiniciar el estado del juego
     estadoJuego.cartasDisponibles = [...CARTAS_LOTERIA];
@@ -294,6 +305,9 @@ function reiniciarJuego() {
         clearTimeout(estadoJuego.timeoutSiguienteCarta);
         estadoJuego.timeoutSiguienteCarta = null;
     }
+
+    // Liberar el wake lock
+    liberarWakeLock();
     
     // Reiniciar estado
     estadoJuego.juegoActivo = false;
@@ -350,6 +364,9 @@ function elegirYMostrarCartaAleatoria() {
 function terminarJuego() {
     estadoJuego.juegoActivo = false;
     estadoJuego.juegoPausado = false;
+
+    // Liberar el wake lock
+    liberarWakeLock();
     
     // Mostrar imagen de finalización del juego
     ocultarCartaConEfecto(() => {
@@ -556,4 +573,38 @@ function mostrarIndicadorTiempo(segundos) {
     indicador.hideTimer = setTimeout(() => {
         indicador.style.opacity = '0';
     }, 2000);
+}
+
+// Solicitar que la pantalla no se apague
+async function solicitarWakeLock() {
+    if ('wakeLock' in navigator) {
+        try {
+            estadoJuego.wakeLock = await navigator.wakeLock.request('screen');
+            console.log('Wake Lock activado');
+
+            // Agregar listener para reactivar si se libera (por ejemplo, al cambiar de app)
+            estadoJuego.wakeLock.addEventListener('release', () => {
+                console.log('Wake Lock liberado');
+                // Intentar reactivar cuando el usuario vuelva a la app
+                if (estadoJuego.juegoActivo && !estadoJuego.juegoPausado) {
+                    solicitarWakeLock();
+                }
+            });
+        } catch (error) {
+            console.error('No se pudo activar el Wake Lock:', error);
+        }
+    } else {
+        console.warn('Wake Lock API no soportada en este navegador');
+    }
+}
+
+// Liberar el wake lock cuando sea necesario
+function liberarWakeLock() {
+    if (estadoJuego.wakeLock) {
+        estadoJuego.wakeLock.release()
+            .then(() => {
+                estadoJuego.wakeLock = null;
+                console.log('Wake Lock liberado manualmente');
+            });
+    }
 }
