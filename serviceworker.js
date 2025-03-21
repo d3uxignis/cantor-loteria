@@ -1,5 +1,5 @@
 // Nombre de la caché
-const CACHE_NAME = 'loteria-mexicana-v1';
+const CACHE_NAME = 'loteria-mexicana-v2';
 
 // Archivos para cachear inicialmente
 const urlsToCache = [
@@ -33,19 +33,21 @@ self.addEventListener('install', event => {
 
 // Activar el Service Worker y limpiar cachés antiguas
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Eliminando caché antigua:', cacheName);
-            return caches.delete(cacheName);
-          }
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('Eliminando caché antigua:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        }).then(() => {
+            // Esto fuerza a todos los clientes a actualizar a la nueva versión
+            return self.clients.claim();
         })
-      );
-    })
-  );
-  return self.clients.claim();
+    );
 });
 
 // Estrategia de caché: Cache First, luego red

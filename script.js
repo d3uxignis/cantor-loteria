@@ -98,36 +98,39 @@ document.addEventListener('DOMContentLoaded', inicializarAplicacion);
 
 function inicializarAplicacion() {
     console.log('Inicializando aplicación en ruta base:', rutaBase);
-    
+
     // Obtener referencias a elementos de la interfaz
     elementosInterfaz.imagenCartaActual = document.getElementById('carta-actual');
     elementosInterfaz.contenedorHistorial = document.querySelector('.cartas-historial');
-    
+
     // Configurar síntesis de voz
     configurarSintetizadorVoz();
-    
+
     // Precargar imágenes en segundo plano
     precargarImagenes();
-    
+
     // Mostrar imagen de presentación con instrucciones
     elementosInterfaz.imagenCartaActual.src = IMAGEN_BIENVENIDA;
     elementosInterfaz.imagenCartaActual.onerror = manejarErrorCargaImagen;
     mostrarCartaConEfecto();
-    
+
     // Configurar escuchador de eventos para la imagen principal
     elementosInterfaz.imagenCartaActual.addEventListener('click', manejarClickCarta);
 
     // Configurar escuchadores para deslizamientos
     configurarDetectorDeslizamiento();
-    
+
     // Hacer que la imagen sea interactiva visualmente
     elementosInterfaz.imagenCartaActual.style.cursor = 'pointer';
-    
+
     // Agregar botón de reinicio para dispositivos móviles
     agregarBotonReinicio();
-    
+
     // Agregar Service Worker para PWA
     registrarServiceWorker();
+
+    // Verificar si hay actualizaciones disponibles
+    verificarActualizaciones();
 
     // Manejar eventos de visibilidad del documento
     document.addEventListener('visibilitychange', () => {
@@ -628,5 +631,27 @@ function liberarWakeLock() {
                 estadoJuego.wakeLock = null;
                 console.log('Wake Lock liberado manualmente');
             });
+    }
+}
+
+// Verifica y actualiza
+function verificarActualizaciones() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistration().then(registration => {
+            if (registration) {
+                registration.update();
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // Se ha descargado una nueva versión
+                            if (confirm('Hay una nueva versión disponible. ¿Quieres actualizar ahora?')) {
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            }
+        });
     }
 }
